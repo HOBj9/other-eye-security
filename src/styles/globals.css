@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --color-primary: #5b57b8;
+  --color-primary-soft: #706bcf;
+  --color-navy: #f5f7ff;
+  --color-white: #ffffff;
+  --color-glow: rgba(140, 120, 255, 0.35);
+  --radius-card: 1.25rem;
+  --shadow-soft: 0 10px 40px rgba(95, 107, 180, 0.18);
+  --shadow-glow: 0 0 80px rgba(112, 107, 207, 0.3);
+  --text-main: #10193a;
+  --card-bg: rgba(255, 255, 255, 0.64);
+  --card-border: rgba(91, 87, 184, 0.2);
+  /* Feature cards / reference tokens */
+  --background: #f5f7ff;
+  --card: rgba(255, 255, 255, 0.93);
+  --surface-elevated: rgba(255, 255, 255, 0.86);
+  --border-soft: rgba(91, 87, 184, 0.22);
+  --border: rgba(91, 87, 184, 0.38);
+  --heading: #0b1228;
+  --body: #151c33;
+  --muted: #55607a;
+  /* HSL channels only — for `hsl(var(--foreground) / 0.35)` on capability cards */
+  --foreground: 222 47% 11%;
+
+  /* Interactive feature cards (light): accent wash → neutral mid → near-opaque end + inactive dim */
+  --feature-card-solid: #f4f6fb;
+  --feature-card-base-mid: rgba(255, 255, 255, 0.96);
+  --feature-card-base-end: rgba(248, 250, 252, 0.99);
+  --feature-card-dim: rgba(15, 23, 42, 0.08);
+  --feature-card-border-active: rgba(91, 87, 184, 0.52);
+  --feature-card-glow: rgba(112, 107, 207, 0.24);
+  /* Extra brand veils stacked under card text scrim (see FeaturesServiceStack) */
+  --feature-card-brand-primary-veil: color-mix(in srgb, var(--color-primary) 14%, transparent);
+  --feature-card-brand-soft-veil: color-mix(in srgb, var(--color-primary-soft) 12%, transparent);
+}
+
+@theme {
+  --font-cairo: 'Cairo', sans-serif;
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-background: var(--background);
+  --color-muted: var(--muted);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-cairo);
+  background:
+    radial-gradient(circle at 10% 10%, var(--color-glow), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(91, 87, 184, 0.22), transparent 35%),
+    linear-gradient(180deg, #fcfdff 0%, var(--color-navy) 45%, #edf1ff 100%);
+  color: var(--text-main);
+  transition: background 0.6s ease, color 0.45s ease;
+}
+
+html.dark {
+  --color-navy: #0b1023;
+  --text-main: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-border: rgba(255, 255, 255, 0.14);
+  --shadow-soft: 0 10px 40px rgba(15, 23, 42, 0.25);
+  --background: #0b1023;
+  --card: rgba(15, 20, 40, 0.96);
+  --surface-elevated: rgba(11, 15, 32, 0.96);
+  --border-soft: rgba(255, 255, 255, 0.12);
+  --border: rgba(255, 255, 255, 0.22);
+  --heading: #f8fafc;
+  --body: #e8edf5;
+  --muted: #a8b4c9;
+  --foreground: 210 40% 98%;
+
+  --feature-card-solid: #0a0f1f;
+  --feature-card-base-mid: rgba(15, 23, 42, 0.94);
+  --feature-card-base-end: rgba(2, 6, 23, 0.99);
+  --feature-card-dim: rgba(0, 0, 0, 0.44);
+  --feature-card-border-active: rgba(112, 107, 207, 0.55);
+  --feature-card-glow: rgba(112, 107, 207, 0.28);
+  --feature-card-brand-primary-veil: color-mix(in srgb, var(--color-primary) 18%, transparent);
+  --feature-card-brand-soft-veil: color-mix(in srgb, var(--color-primary-soft) 15%, transparent);
+}
+
+html.dark body {
+  background:
+    radial-gradient(circle at 10% 10%, var(--color-glow), transparent 40%),
+    radial-gradient(circle at 85% 20%, rgba(91, 87, 184, 0.25), transparent 35%),
+    linear-gradient(180deg, #111735 0%, var(--color-navy) 45%, #090d1e 100%);
+}
+
+/* Improve text contrast in light mode without touching dark mode visuals. */
+html:not(.dark) .text-white {
+  color: #0f1630 !important;
+}
+
+html:not(.dark) .text-white\/90 {
+  color: rgba(15, 22, 48, 0.9) !important;
+}
+
+html:not(.dark) .text-white\/85 {
+  color: rgba(15, 22, 48, 0.85) !important;
+}
+
+html:not(.dark) .text-white\/80 {
+  color: rgba(15, 22, 48, 0.8) !important;
+}
+
+html:not(.dark) .text-white\/75 {
+  color: rgba(15, 22, 48, 0.75) !important;
+}
+
+html:not(.dark) .text-white\/70 {
+  color: rgba(15, 22, 48, 0.7) !important;
+}
+
+html:not(.dark) .text-white\/60 {
+  color: rgba(15, 22, 48, 0.6) !important;
+}
+
+/* Hero: dark imagery in both themes — do not remap `.text-white` to navy here. */
+html:not(.dark) #hero.text-white,
+html:not(.dark) #hero .text-white {
+  color: #ffffff !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.text-primary {
+  color: #5b57b8;
+}
+
+.text-heading {
+  color: var(--heading);
+}
+
+.text-body {
+  color: var(--body);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.text-foreground {
+  color: hsl(var(--foreground));
+}
+
+.text-muted-foreground {
+  color: var(--muted);
+}
+
+.border-border {
+  border-color: var(--border);
+}
+
+.border-border-soft {
+  border-color: var(--border-soft);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.container-shell {
+  width: min(1200px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.glass-card {
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-soft);
+  border-radius: var(--radius-card);
+  transition:
+    background 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #161b35;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-primary-soft), var(--color-primary));
+  border-radius: 9999px;
+}
