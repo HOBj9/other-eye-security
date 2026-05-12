@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { navItems } from '../../data/navigation';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { EyeThemeToggle } from '../ui/EyeThemeToggle';
@@ -8,9 +9,22 @@ import { EyeThemeToggle } from '../ui/EyeThemeToggle';
 const spring = { type: 'spring' as const, stiffness: 430, damping: 34, mass: 0.85 };
 
 export function Navbar() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const activeId = useActiveSection(navItems.map((item) => item.href.replace('#', '')));
+
+  const sectionIds = useMemo(
+    () => navItems.filter((item) => item.href.startsWith('#')).map((item) => item.href.replace('#', '')),
+    [],
+  );
+  const activeId = useActiveSection(sectionIds);
+
+  const activeLinkHref = useMemo(
+    () => (location.pathname === '/contact' ? '#contact-cta' : `#${activeId}`),
+    [location.pathname, activeId],
+  );
+
   const desktopNavRef = useRef<HTMLUListElement | null>(null);
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const [indicator, setIndicator] = useState({ x: 0, w: 0, cx: 0 });
@@ -24,21 +38,20 @@ export function Navbar() {
 
   const updateIndicator = useCallback(() => {
     const navEl = desktopNavRef.current;
-    const activeHref = `#${activeId}`;
-    const activeEl = linkRefs.current[activeHref];
+    const activeEl = linkRefs.current[activeLinkHref];
     if (!navEl || !activeEl) return;
     const x = activeEl.offsetLeft - navEl.scrollLeft;
     const w = Math.max(28, activeEl.offsetWidth);
     setIndicator({ x, w, cx: x + w / 2 - 5 });
-  }, [activeId]);
+  }, [activeLinkHref]);
 
   useLayoutEffect(() => {
     updateIndicator();
-  }, [updateIndicator, scrolled]);
+  }, [updateIndicator, scrolled, activeLinkHref]);
 
   useEffect(() => {
     const navEl = desktopNavRef.current;
-    const activeEl = linkRefs.current[`#${activeId}`];
+    const activeEl = linkRefs.current[activeLinkHref];
     if (!navEl || !activeEl) return;
 
     const onWindowResize = () => updateIndicator();
@@ -55,7 +68,7 @@ export function Navbar() {
       navEl.removeEventListener('scroll', onNavScroll);
       observer.disconnect();
     };
-  }, [activeId, updateIndicator]);
+  }, [activeLinkHref, updateIndicator]);
 
   const scrollToSection = (href: string) => {
     const id = href.replace('#', '');
@@ -63,6 +76,22 @@ export function Navbar() {
     if (!target) return;
     const top = target.getBoundingClientRect().top + window.scrollY - 88;
     window.scrollTo({ top, behavior: 'smooth' });
+  };
+
+  const goToNavTarget = (href: string) => {
+    if (!href.startsWith('#')) {
+      if (href.startsWith('/')) navigate(href);
+      return;
+    }
+    if (location.pathname !== '/') {
+      const id = href.replace('#', '');
+      navigate({ pathname: '/', hash: id });
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => scrollToSection(href));
+      });
+      return;
+    }
+    scrollToSection(href);
   };
 
   const onNavigate = () => setIsMenuOpen(false);
@@ -77,11 +106,18 @@ export function Navbar() {
         }`}
       >
         <a
-          href="#hero"
+          href="/"
           className="flex items-center gap-3 text-base font-bold text-[#0B1023] dark:text-white"
           onClick={(event) => {
             event.preventDefault();
-            scrollToSection('#hero');
+            if (location.pathname !== '/') {
+              navigate('/');
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => scrollToSection('#hero'));
+              });
+            } else {
+              scrollToSection('#hero');
+            }
           }}
         >
           <img
@@ -111,18 +147,17 @@ export function Navbar() {
           </motion.div>
 
           {navItems.map((item) => {
-            const id = item.href.replace('#', '');
-            const isActive = activeId === id;
+            const isActive = item.href === activeLinkHref;
             return (
               <li key={item.href}>
                 <a
                   ref={(el) => {
                     linkRefs.current[item.href] = el;
                   }}
-                  href={item.href}
+                  href={item.href.startsWith('/') ? item.href : `/${item.href}`}
                   onClick={(event) => {
                     event.preventDefault();
-                    scrollToSection(item.href);
+                    goToNavTarget(item.href);
                   }}
                   className={`relative z-10 inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-[transform,color] duration-200 ease-out will-change-transform hover:-translate-y-0.5 hover:scale-[1.03] ${
                     isActive
@@ -166,14 +201,14 @@ export function Navbar() {
               {navItems.map((item) => (
                 <li key={item.href}>
                   <a
-                    href={item.href}
+                    href={item.href.startsWith('/') ? item.href : `/${item.href}`}
                     onClick={(event) => {
                       event.preventDefault();
-                      scrollToSection(item.href);
+                      goToNavTarget(item.href);
                       onNavigate();
                     }}
                     className={`block rounded-lg px-3 py-2 text-sm transition ${
-                      activeId === item.href.replace('#', '')
+                      item.href === activeLinkHref
                         ? 'bg-[#5B57B8]/20 text-[#2c2873] dark:text-white'
                         : 'text-[#2b3150]/85 hover:bg-[#5B57B8]/10 hover:text-[#1b2140] dark:text-white/80 dark:hover:bg-white/10 dark:hover:text-white'
                     }`}
