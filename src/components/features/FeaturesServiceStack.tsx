@@ -3,7 +3,6 @@ import { useEffect, useState, useSyncExternalStore } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import type { FeatureCardItem } from '../../data/featureCards';
 import { cn } from '../../lib/cn';
-import { FeatureCarouselBackdrop } from './FeatureCarouselBackdrop';
 import { getSignedDistance } from './getSignedDistance';
 import { ServiceCardContent } from './ServiceCardContent';
 
@@ -97,22 +96,14 @@ export function FeaturesServiceStack({ items, accentColors }: FeaturesServiceSta
   const PrevIcon = isRtl ? FiChevronRight : FiChevronLeft;
   const NextIcon = isRtl ? FiChevronLeft : FiChevronRight;
 
-  const activeVisualSrc = items[activeIndex]?.productImageSrc;
-
   return (
     <div
-      className="relative isolate overflow-hidden rounded-3xl"
+      className="relative"
       role="region"
       aria-roledescription="carousel"
       aria-label="عرض مميزات المنصة"
     >
-      <FeatureCarouselBackdrop
-        imageSrc={activeVisualSrc}
-        activeIndex={activeIndex}
-        reducedMotion={reduceMotion}
-      />
-
-      <div className="relative z-10 space-y-4 lg:hidden">
+      <div className="space-y-4 lg:hidden">
         {items.map((item, index) => {
           const isActive = index === activeIndex;
           const accentColor = accents[index] ?? DEFAULT_ACCENTS[0];
@@ -172,14 +163,13 @@ export function FeaturesServiceStack({ items, accentColors }: FeaturesServiceSta
                 index={index}
                 isActive={isActive}
                 compact
-                productImageSrc={item.productImageSrc}
               />
             </motion.button>
           );
         })}
       </div>
 
-      <div className="relative z-10 mx-auto hidden h-[470px] w-full max-w-4xl overflow-hidden lg:block lg:h-[540px]">
+      <div className="relative mx-auto hidden h-[470px] w-full max-w-4xl overflow-hidden lg:block lg:h-[540px]">
         {total > 1 ? (
           <>
             <button
@@ -291,7 +281,6 @@ export function FeaturesServiceStack({ items, accentColors }: FeaturesServiceSta
                   index={index}
                   isActive={isActive}
                   stackPeek={!isActive}
-                  productImageSrc={item.productImageSrc}
                 />
               </motion.button>
             </div>
@@ -301,7 +290,7 @@ export function FeaturesServiceStack({ items, accentColors }: FeaturesServiceSta
 
       {total > 1 ? (
         <div
-          className="relative z-10 mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 lg:mt-8"
+          className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 lg:mt-8"
           aria-label="اختيار الميزة"
         >
           {items.map((item, index) => (

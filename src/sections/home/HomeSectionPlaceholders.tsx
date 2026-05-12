@@ -1,11 +1,12 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import type { IconType } from 'react-icons';
 import { FiArrowLeft, FiCamera, FiClock, FiLayers, FiMapPin, FiPhoneCall, FiShield, FiTool } from 'react-icons/fi';
 import { FeaturesServiceStack } from '../../components/features/FeaturesServiceStack';
+import { CONTACT } from '../../data/contact';
 import { featureCards } from '../../data/featureCards';
 import { cn } from '../../lib/cn';
-import { Button } from '../../components/ui/Button';
 import { SectionTitle } from '../../components/ui/SectionTitle';
 
 function RevealCard({
@@ -376,10 +377,13 @@ export const ContactCtaSection = () => (
         <h3 className="mt-2 text-2xl font-extrabold">احصل على معاينة أمنية لموقعك خلال 48 ساعة</h3>
         <p className="mt-3 text-sm text-white/70">هذا نص تجريبي لدعوة اتخاذ الإجراء ويمكن تخصيصه لاحقًا.</p>
       </div>
-      <Button className="gap-2">
+      <Link
+        to="/contact"
+        className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#5B57B8] to-[#706BCF] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(112,107,207,0.35)] transition duration-300 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+      >
         تواصل الآن
         <FiArrowLeft />
-      </Button>
+      </Link>
     </div>
   </section>
 );
@@ -405,9 +409,19 @@ export const FooterSection = () => (
         <div>
           <h4 className="font-bold">بيانات التواصل</h4>
           <ul className="mt-3 space-y-2 text-sm text-white/75">
-            <li className="flex items-center gap-2"><FiPhoneCall /> 0000 000 050</li>
-            <li>support@example.com</li>
-            <li>الرياض - المملكة العربية السعودية</li>
+            <li className="flex items-center gap-2">
+              <FiPhoneCall aria-hidden />
+              <a href={`tel:+966${CONTACT.phone.replace(/^0/, '')}`} className="hover:text-white">
+                {CONTACT.phone}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${CONTACT.email}`} className="hover:text-white">
+                {CONTACT.email}
+              </a>
+            </li>
+            <li>{CONTACT.address}</li>
+            <li className="text-white/60">س.ت: {CONTACT.commercialRegister}</li>
           </ul>
         </div>
       </div>

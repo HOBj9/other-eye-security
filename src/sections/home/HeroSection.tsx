@@ -7,9 +7,16 @@ import {
   useMotionTemplate,
 } from 'framer-motion';
 import { useRef } from 'react';
-import { Button } from '../../components/ui/Button';
+import { cn } from '../../lib/cn';
 
 const SCROLL_RUNWAY_VH = 200;
+
+const heroPrimaryCtaClass = cn(
+  'inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold transition duration-300',
+  'bg-gradient-to-l from-[#5B57B8] to-[#706BCF] text-white hover:opacity-95',
+  'shadow-[0_6px_28px_rgba(0,0,0,0.45),0_10px_30px_rgba(112,107,207,0.35)]',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70',
+);
 
 export function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
@@ -131,9 +138,9 @@ export function HeroSection() {
               className="mt-10 flex flex-wrap items-center justify-center gap-3"
               style={{ opacity: ctaOpacity, y: ctaY }}
             >
-              <Button type="button" className="shadow-[0_6px_28px_rgba(0,0,0,0.45)]">
+              <a href="#contact-cta" className={heroPrimaryCtaClass}>
                 ابدأ الآن
-              </Button>
+              </a>
               <a
                 href="#services"
                 className="inline-flex items-center justify-center rounded-xl border border-white/35 bg-[#040815]/72 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_6px_28px_rgba(0,0,0,0.45)] transition duration-300 hover:border-white/45 hover:bg-[#050a1a]/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
