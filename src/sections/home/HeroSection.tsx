@@ -69,11 +69,11 @@ export function HeroSection() {
           aria-hidden
         >
           <img
-            src="/lucid-origin_Ultra_realistic_futuristic_CCTV_security_camera_floating_in_a_dark_cinematic_env-0.jpg"
+            src="/hero-security-showcase.png"
             alt=""
             width={2048}
-            height={2048}
-            className="h-full w-full object-cover object-[72%_center] md:object-right"
+            height={1152}
+            className="h-full w-full object-cover object-center"
             decoding="async"
             fetchPriority="high"
           />
@@ -119,9 +119,9 @@ export function HeroSection() {
               style={{ opacity: titleOpacity, y: titleY, scale: titleScale, filter: titleFilter }}
             >
               <h1 className="text-4xl font-extrabold leading-[1.12] tracking-tight text-white [text-shadow:0_2px_4px_rgba(0,0,0,0.85),0_8px_40px_rgba(0,0,0,0.65),0_0_1px_rgba(0,0,0,0.9)] md:text-5xl lg:text-[3.15rem]">
-                أنظمة مراقبة ذكية
+              حلول أمنية وتقنية ذكية 
                 <span className="mt-2 block text-white drop-shadow-[0_4px_28px_rgba(0,0,0,0.82)]">
-                  لحماية أعمالك
+                للمنشئات والشركات والمجمعات السكنية
                 </span>
               </h1>
             </motion.div>
@@ -130,8 +130,7 @@ export function HeroSection() {
               className="mt-6 max-w-2xl text-sm leading-8 text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.95),0_4px_24px_rgba(0,0,0,0.65)] md:text-base md:leading-8"
               style={{ opacity: subOpacity, y: subY }}
             >
-              منصة مراقبة مستقبلية تجمع بين الرؤية الواضحة، التنبيهات الذكية، والتحكم المركزي — لتعيش تجربة
-              أمنية بمستوى SaaS عالمي بلمسة عربية احترافية.
+              توريد وتركيب أنظمة المراقبة، الأبواب الأمنية، الأنظمة الذكية، وتقوية الشبكات بأعلى معايير الجودة والموثوقية.
             </motion.p>
 
             <motion.div

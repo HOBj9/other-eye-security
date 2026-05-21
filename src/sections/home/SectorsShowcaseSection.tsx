@@ -32,9 +32,8 @@ const SECTORS: SectorDef[] = [
   { label: 'المصانع', key: 'factory' },
   { label: 'المستودعات', key: 'warehouse' },
   { label: 'المكاتب والشركات', key: 'tower' },
-  { label: 'الفلل والمنازل', key: 'villa' },
   { label: 'المجمعات السكنية', key: 'complex' },
-  { label: 'المحلات التجارية', key: 'store' },
+  { label: 'المجمعات التجارية', key: 'store' },
 ];
 
 function SensorDot({
@@ -158,17 +157,6 @@ function SectorIllustration({
           <rect x="36" y="78" width="28" height="16" rx="2" fill={deep} stroke={stroke} strokeWidth={swThin} />
         </svg>
       );
-    case 'villa':
-      /* فيلا: سقف منفصل عن الجسم — لا تكرار للتعبئة */
-      return (
-        <svg viewBox="0 0 100 100" className={className} preserveAspectRatio="xMidYMax meet" aria-hidden>
-          <path d="M50 12 L14 40 H86 Z" fill={fill} stroke={stroke} strokeWidth={sw} strokeLinejoin="round" />
-          <rect x="22" y="40" width="56" height="52" rx="2" fill={fill} stroke={stroke} strokeWidth={sw} />
-          <rect x="38" y="58" width="24" height="26" rx="2" fill={deep} stroke={stroke} strokeWidth={swThin} />
-          <rect x="28" y="48" width="10" height="9" rx="1.5" fill={w} opacity={0.88} />
-          <rect x="60" y="48" width="10" height="9" rx="1.5" fill={w} opacity={0.8} />
-        </svg>
-      );
     case 'complex':
       /* مجمع: ثلاث كتل بمسافات أفقية ثابتة */
       return (
@@ -262,7 +250,7 @@ export function SectorsShowcaseSection() {
           </span>
         </h2>
         <p className="text-body mt-5 text-sm leading-8 sm:text-base sm:leading-8">
-          من المصنع إلى المتجر، ومن المستودع إلى الفلّة — نُؤمّن كل نوع من المنشآت بحلول مصمَّمة لطبيعتها وحجمها وحركتها.
+          من المصنع إلى المجمع التجاري، ومن المستودع إلى المكتب — نُؤمّن كل نوع من المنشآت بحلول مصمَّمة لطبيعتها وحجمها وحركتها.
         </p>
       </motion.div>
 
@@ -275,7 +263,7 @@ export function SectorsShowcaseSection() {
       >
         <div className="pointer-events-none absolute -bottom-6 left-[8%] right-[8%] h-px bg-linear-to-r from-transparent via-border to-transparent" />
 
-        <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-6 lg:gap-y-12">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-5 lg:gap-y-12">
           {SECTORS.map((sector, index) => {
             const drift = getVerticalDrift(sector.key, index);
             return (

@@ -1,11 +1,21 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
 import type { IconType } from 'react-icons';
-import { FiArrowLeft, FiCamera, FiClock, FiLayers, FiMapPin, FiPhoneCall, FiShield, FiTool } from 'react-icons/fi';
+import {
+  FiCamera,
+  FiLock,
+  FiMail,
+  FiPhoneCall,
+  FiSmartphone,
+  FiWifi,
+} from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
+import { FaqAccordion } from '../../components/faq/FaqAccordion';
 import { FeaturesServiceStack } from '../../components/features/FeaturesServiceStack';
 import { CONTACT } from '../../data/contact';
+import { faqItems } from '../../data/faq';
 import { featureCards } from '../../data/featureCards';
+import { whyChooseUsItems } from '../../data/whyChooseUs';
 import { cn } from '../../lib/cn';
 import { SectionTitle } from '../../components/ui/SectionTitle';
 
@@ -33,43 +43,51 @@ function RevealCard({
 
 const services: { title: string; description: string; icon: IconType }[] = [
   {
-    title: 'أنظمة كاميرات IP',
-    description: 'تصميم وتوريد وتركيب كاميرات بدقة عالية للمواقع التجارية والسكنية.',
+    title: 'أنظمة المراقبة والكاميرات IP',
+    description:
+      'توريد وتركيب كاميرات مراقبة داخلية وخارجية للمنشآت والشركات والمستودعات مع الربط بالجوال والتسجيل السحابي وخدمات الصيانة.',
     icon: FiCamera,
   },
   {
-    title: 'غرف مراقبة مركزية',
-    description: 'تجهيز غرفة تحكم متكاملة لمتابعة الفروع والمستودعات على مدار الساعة.',
-    icon: FiLayers,
+    title: 'الأبواب والأنظمة الأمنية',
+    description: 'حلول متكاملة للتحكم بالدخول ورفع مستوى الأمان للمنشآت السكنية والتجارية.',
+    icon: FiLock,
   },
   {
-    title: 'عقود صيانة دورية',
-    description: 'زيارات فنية منتظمة وفحص استباقي لضمان استمرارية المنظومة.',
-    icon: FiTool,
+    title: 'الأنظمة الذكية (Smart Systems)',
+    description: 'تحويل منزلك أو منشأتك إلى بيئة ذكية سهلة التحكم عبر الجوال.',
+    icon: FiSmartphone,
+  },
+  {
+    title: 'تقوية الشبكات والواي فاي',
+    description: 'حلول احترافية لتغطية الشبكات وتحسين جودة الاتصال داخل المنشآت والمنازل الكبيرة.',
+    icon: FiWifi,
   },
 ];
 
 type ProductPreview = { name: string; spec: string; imageSrc?: string };
 
-/** صور المنتجات في `public/` — مطابقة الاسم المعروض للصورة الفعلية (Hikvision). */
+/** صور المنتجات من [Hikvision](https://www.hikvision.com/ar/) — محفوظة في `public/`. */
 const products: ProductPreview[] = [
   {
-    name: 'كاميرا Dome Pro X',
-    spec: '4K - رؤية ليلية - تتبع حركة ذكي',
-    /** كاميرا دوم Hikvision — مصدر: `ChatGPT Image May 12, 2026, 01_24_11 AM.png` */
-    imageSrc: '/dome-pro-x.png',
+    name: 'كاميرا 360°',
+    spec: 'تغطية بانورامية 360° - دقة عالية - مقاومة للعوامل (IP67)',
+    imageSrc: '/product-camera-360.png',
   },
   {
-    name: 'NVR Secure 16CH',
-    spec: '16 قناة - تخزين 8TB - وصول سحابي',
-    /** مسجّل شبكة 16 قناة — مصدر: `ChatGPT Image May 12, 2026, 01_25_30 AM.png` */
-    imageSrc: '/nvr-secure-16ch.png',
+    name: 'كاميرا شبكية',
+    spec: '4MP ColorVu - رؤية ليلية ملونة - تصنيف ذكي للأشخاص والمركبات',
+    imageSrc: '/product-camera-standard.png',
   },
   {
-    name: 'لوحة تحكم Vision Wall',
-    spec: 'عرض متعدد الشاشات - إدارة تنبيهات فورية',
-    /** وحدة تحكم Vision Wall — مصدر: `ChatGPT Image May 12, 2026, 11_30_37 AM.png` */
-    imageSrc: '/vision-wall-control-panel.png',
+    name: 'بوابة ذكية',
+    spec: 'حاجز مركبات - رفع سريع - حماية ضد الاصطدام - تشغيل موثوق',
+    imageSrc: '/product-smart-gate.png',
+  },
+  {
+    name: 'مسجّل فيديو شبكي (NVR)',
+    spec: 'تسجيل متعدد القنوات - ضغط H.265+ - تحليلات AcuSense',
+    imageSrc: '/product-nvr.png',
   },
 ];
 
@@ -95,22 +113,10 @@ const testimonials = [
   },
 ];
 
-const faq = [
-  {
-    q: 'هل يمكن مراقبة الكاميرات من الهاتف؟',
-    a: 'نعم، نوفر تطبيقًا آمنًا يتيح متابعة البث المباشر واستقبال التنبيهات من أي مكان.',
-  },
-  {
-    q: 'كم يستغرق تنفيذ مشروع متوسط الحجم؟',
-    a: 'عادة من 3 إلى 7 أيام عمل حسب عدد النقاط ومتطلبات البنية التحتية.',
-  },
-  {
-    q: 'هل تشمل الخدمة الصيانة بعد التركيب؟',
-    a: 'نوفر خيارات متعددة تشمل الصيانة الوقائية، الطوارئ، وتحديثات البرامج الدورية.',
-  },
-];
-
 export { SectorsShowcaseSection } from './SectorsShowcaseSection';
+export { PlatformCapabilitiesSection } from './PlatformCapabilitiesSection';
+export { ProjectsSection } from './ProjectsSection';
+export { ClientsSection } from './ClientsSection';
 
 export const ServicesSection = () => {
   const reduceMotion = useReducedMotion();
@@ -150,12 +156,12 @@ export const ServicesSection = () => {
         <SectionTitle
           eyebrow="خدماتنا"
           title="حلول أمنية متكاملة"
-          description="مجموعة خدمات تجريبية قابلة للتخصيص حسب نوع نشاطك."
+          description="حلول أمنية وتقنية متكاملة للمنشآت السكنية والتجارية والصناعية."
         />
       </motion.div>
 
       <motion.div
-        className="mt-9 grid gap-5 perspective-[1200px] md:grid-cols-3 md:gap-6"
+        className="mt-9 grid gap-5 perspective-[1200px] sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
         variants={containerVariants}
         initial="hidden"
         whileInView="show"
@@ -265,28 +271,47 @@ export const FeaturesSection = () => (
 
 export const WhyChooseUsSection = () => (
   <section id="why-choose-us" className="container-shell scroll-mt-24 py-16 md:py-20">
-    <div className="grid gap-4 md:grid-cols-3">
-      {[
-        { icon: FiShield, title: 'اعتمادية عالية', text: 'تنفيذ بمعايير هندسية تضمن استقرار النظام على المدى الطويل.' },
-        { icon: FiClock, title: 'استجابة سريعة', text: 'فريق دعم فني متوفر للاستجابة الفورية للحالات الطارئة.' },
-        { icon: FiMapPin, title: 'تغطية واسعة', text: 'خدمة مشاريع في مدن متعددة عبر شبكة فنيين مختصين.' },
-      ].map(({ icon: Icon, title, text }, idx) => (
-        <RevealCard key={title} delay={idx * 0.08} className="h-full">
-          <article className="glass-card flex h-full flex-col p-6">
-            <Icon className="text-2xl text-[#706BCF]" />
-            <h3 className="mt-4 text-lg font-bold">{title}</h3>
-            <p className="mt-3 text-sm leading-7 text-white/70">{text}</p>
-          </article>
-        </RevealCard>
+    <SectionTitle
+      eyebrow="لماذا نحن؟"
+      title="لماذا يختارنا العملاء؟"
+      description="شركة احترافية تنفذ مشاريع وتتحمل مسؤولية الجودة والتشغيل."
+    />
+    <motion.div
+      className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.07 } },
+      }}
+    >
+      {whyChooseUsItems.map(({ title, icon: Icon }, idx) => (
+        <motion.div
+          key={title}
+          variants={{
+            hidden: { opacity: 0, y: 16 },
+            show: { opacity: 1, y: 0 },
+          }}
+        >
+          <RevealCard delay={idx * 0.05} className="h-full">
+            <article className="glass-card flex h-full items-center gap-4 p-5 sm:p-6">
+              <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 text-[#706BCF]">
+                <Icon className="h-5 w-5" aria-hidden />
+              </span>
+              <h3 className="text-base font-bold text-white sm:text-lg">{title}</h3>
+            </article>
+          </RevealCard>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   </section>
 );
 
 export const ProductsPreviewSection = () => (
   <section id="products-preview" className="container-shell scroll-mt-24 py-16 md:py-20">
     <SectionTitle eyebrow="المنتجات" title="معاينة سريعة لأجهزتنا" />
-    <div className="mt-7 grid gap-4 md:grid-cols-3">
+    <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {products.map((product, idx) => (
         <RevealCard key={product.name} delay={idx * 0.08}>
           <article className="glass-card p-6">
@@ -355,36 +380,93 @@ export const TestimonialsSection = () => (
 
 export const FaqPreviewSection = () => (
   <section id="faq-preview" className="container-shell scroll-mt-24 py-16 md:py-20">
-    <SectionTitle eyebrow="FAQ" title="أسئلة شائعة قبل البدء" />
-    <div className="mt-7 space-y-3">
-      {faq.map((item, idx) => (
-        <RevealCard key={item.q} delay={idx * 0.07}>
-          <article className="glass-card p-5">
-            <h3 className="text-base font-bold">{item.q}</h3>
-            <p className="mt-2 text-sm leading-7 text-white/70">{item.a}</p>
-          </article>
-        </RevealCard>
-      ))}
+    <SectionTitle
+      eyebrow="الأسئلة الشائعة"
+      title="الأسئلة الشائعة"
+      description="إجابات واضحة حول الأنظمة، التوسع، الصيانة، والتنفيذ — كل ما تحتاج معرفته في مكان واحد."
+    />
+    <div className="mt-8">
+      <FaqAccordion items={faqItems} />
     </div>
   </section>
 );
 
+const telHref = `tel:+966${CONTACT.phone.replace(/^0/, '')}`;
+
 export const ContactCtaSection = () => (
   <section id="contact-cta" className="container-shell scroll-mt-24 py-16 md:py-20">
-    <div className="glass-card flex flex-col items-start justify-between gap-6 p-8 md:flex-row md:items-center">
-      <div>
-        <p className="text-xs font-bold text-[#b8b4ff]">جاهز للانطلاق؟</p>
-        <h3 className="mt-2 text-2xl font-extrabold">احصل على معاينة أمنية لموقعك خلال 48 ساعة</h3>
-        <p className="mt-3 text-sm text-white/70">هذا نص تجريبي لدعوة اتخاذ الإجراء ويمكن تخصيصه لاحقًا.</p>
-      </div>
-      <Link
-        to="/contact"
-        className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#5B57B8] to-[#706BCF] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(112,107,207,0.35)] transition duration-300 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+    <SectionTitle
+      eyebrow="تواصل معنا"
+      title="نحن جاهزون لخدمتك"
+      description="تواصل مباشر عبر واتساب أو الاتصال أو البريد — فريقنا يرد بسرعة ويحدد موعد المعاينة."
+      centered
+    />
+    <motion.div
+      className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.15 }}
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.08 } },
+      }}
+    >
+      <motion.a
+        href={CONTACT.whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
+        className="glass-card group flex flex-col items-center gap-3 p-6 text-center transition hover:border-emerald-400/40"
       >
-        تواصل الآن
-        <FiArrowLeft />
-      </Link>
-    </div>
+        <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 transition group-hover:scale-105">
+          <FaWhatsapp className="h-6 w-6" aria-hidden />
+        </span>
+        <span className="text-sm font-bold text-white">واتساب مباشر</span>
+        <span className="text-xs text-white/65">{CONTACT.phone}</span>
+      </motion.a>
+      <motion.a
+        href={telHref}
+        variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
+        className="glass-card group flex flex-col items-center gap-3 p-6 text-center transition hover:border-primary/40"
+      >
+        <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-[#706BCF] transition group-hover:scale-105">
+          <FiPhoneCall className="h-5 w-5" aria-hidden />
+        </span>
+        <span className="text-sm font-bold text-white">اتصال</span>
+        <span className="text-xs text-white/65">{CONTACT.phone}</span>
+      </motion.a>
+      <motion.a
+        href={`mailto:${CONTACT.email}`}
+        variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
+        className="glass-card group flex flex-col items-center gap-3 p-6 text-center transition hover:border-primary/40"
+      >
+        <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-[#706BCF] transition group-hover:scale-105">
+          <FiMail className="h-5 w-5" aria-hidden />
+        </span>
+        <span className="text-sm font-bold text-white">البريد الإلكتروني</span>
+        <span className="break-all text-xs text-white/65">{CONTACT.email}</span>
+      </motion.a>
+      <motion.div
+        variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
+        className="glass-card flex flex-col items-center gap-3 p-6 text-center"
+      >
+        <span className="text-sm font-bold text-white">حسابات التواصل</span>
+        <motion.div className="flex flex-wrap justify-center gap-2">
+          {CONTACT.social.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/85 transition hover:border-primary/35 hover:text-white"
+            >
+              {item.label}
+            </a>
+          ))}
+        </motion.div>
+      </motion.div>
+    </motion.div>
+    <p className="mt-6 text-center text-sm text-white/55">{CONTACT.address}</p>
   </section>
 );
 
@@ -402,8 +484,14 @@ export const FooterSection = () => (
           <h4 className="font-bold">روابط سريعة</h4>
           <ul className="mt-3 space-y-2 text-sm text-white/75">
             <li><a href="#services">الخدمات</a></li>
-            <li><a href="#features">المميزات</a></li>
+            <li><a href="#overview">القدرات</a></li>
+            <li><a href="#products-preview">المنتجات</a></li>
+            <li><a href="#sectors-we-serve">القطاعات</a></li>
+            <li><a href="#why-choose-us">لماذا نحن</a></li>
+            <li><a href="#projects">المشاريع</a></li>
             <li><a href="#faq-preview">الأسئلة الشائعة</a></li>
+            <li><a href="#clients">عملاؤنا</a></li>
+            <li><a href="#contact-cta">تواصل معنا</a></li>
           </ul>
         </div>
         <div>

@@ -34,8 +34,8 @@ function useRtl() {
 /** Reveal uses IO + CSS; hover uses card transition classes. */
 export function PlatformCapabilitiesSection({
   items = capabilities,
-  title = 'قدرات أساسية لمراقبة أذكى وأكثر أمانًا',
-  description = 'بنية تقنية موحّدة تجمع البث، التحليل، والتنبيهات في تجربة واحدة — قابلة للتوسع مع نمو أعمالك.',
+  title = 'حلول تقنية تدعم نمو أعمالك',
+  description = 'من التخطيط والتنفيذ إلى التشغيل والدعم — نقدّم منظومة متكاملة تلائم طبيعة منشأتك وأهدافها.',
 }: {
   items?: PlatformCapabilityItem[];
   title?: string;
@@ -83,27 +83,29 @@ export function PlatformCapabilitiesSection({
                         isRtl ? 'justify-end' : 'justify-start',
                       )}
                     >
-                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border/60 bg-white/5 -gradient-to-b from-background to-muted/60">
+                      <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border/60 bg-linear-to-b from-background to-muted/60">
                         <Icon className="h-5 w-5 text-primary" aria-hidden />
                       </span>
                     </div>
                     <h3
                       className={cn(
-                        'text-lg font-semibold tracking-tight text-foreground',
+                        'text-base font-semibold leading-8 tracking-tight text-foreground sm:text-lg',
                         isRtl ? 'text-right' : 'text-left',
                       )}
                     >
                       {item.title}
                     </h3>
                   </div>
-                  <p
-                    className={cn(
-                      'text-sm leading-7 text-muted-foreground',
-                      isRtl ? 'text-right' : 'text-left',
-                    )}
-                  >
-                    {item.description}
-                  </p>
+                  {item.description.trim() ? (
+                    <p
+                      className={cn(
+                        'text-sm leading-7 text-muted-foreground',
+                        isRtl ? 'text-right' : 'text-left',
+                      )}
+                    >
+                      {item.description}
+                    </p>
+                  ) : null}
                 </article>
               </ScrollReveal>
             );

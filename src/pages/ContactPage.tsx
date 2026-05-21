@@ -1,3 +1,4 @@
+import { FaWhatsapp } from 'react-icons/fa';
 import { FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 import { MainLayout } from '../layouts/MainLayout';
 import { CONTACT } from '../data/contact';
@@ -18,6 +19,22 @@ export function ContactPage() {
           <div className="mx-auto mt-10 w-full max-w-md text-center">
             <h2 className="text-heading text-lg font-bold">بيانات التواصل</h2>
             <ul className="mt-4 space-y-4 text-start text-sm sm:text-base">
+              <li className="flex items-start justify-center gap-3 rounded-xl border border-border-soft bg-card/80 p-4">
+                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-500">
+                  <FaWhatsapp className="h-4 w-4" aria-hidden />
+                </span>
+                <div>
+                  <p className="text-muted text-xs font-medium uppercase tracking-wide">واتساب</p>
+                  <a
+                    href={CONTACT.whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-heading mt-1 block font-semibold hover:text-primary"
+                  >
+                    {CONTACT.phone}
+                  </a>
+                </div>
+              </li>
               <li className="flex items-start justify-center gap-3 rounded-xl border border-border-soft bg-card/80 p-4">
                 <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-border-soft bg-linear-to-br from-[color-mix(in_srgb,var(--color-primary-soft)_15%,transparent)] to-transparent text-primary">
                   <FiPhone className="h-4 w-4" aria-hidden />
@@ -57,6 +74,22 @@ export function ContactPage() {
                 <p className="text-heading mt-1 font-mono text-lg font-semibold tracking-wide">
                   {CONTACT.commercialRegister}
                 </p>
+              </li>
+              <li className="rounded-xl border border-border-soft bg-card/80 p-4 text-center">
+                <p className="text-muted text-xs font-medium uppercase tracking-wide">حسابات التواصل</p>
+                <div className="mt-3 flex flex-wrap justify-center gap-2">
+                  {CONTACT.social.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-lg border border-border-soft px-3 py-1.5 text-xs font-semibold hover:text-primary"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
               </li>
             </ul>
           </div>

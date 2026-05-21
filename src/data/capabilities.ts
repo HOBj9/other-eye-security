@@ -1,5 +1,5 @@
 import type { IconType } from 'react-icons';
-import { FiActivity, FiCpu, FiEye, FiLock, FiRadio, FiSmartphone } from 'react-icons/fi';
+import { FiCamera, FiCpu, FiLock, FiShield, FiTrendingUp, FiZap } from 'react-icons/fi';
 
 export type CapabilityItem = {
   title: string;
@@ -7,42 +7,36 @@ export type CapabilityItem = {
   icon: IconType;
 };
 
-/** قدرات المنصة — عناوين عربية مع أيقونات موحّدة */
+/** قدرات المنصة — بطاقات العرض الرئيسية */
 export const capabilities: CapabilityItem[] = [
   {
-    title: 'رؤية موحّدة للمواقع',
-    description:
-      'لوحة مركزية تعرض جميع الكاميرات والتنبيهات مع تصنيف ذكي حسب الأولوية والموقع الجغرافي.',
-    icon: FiEye,
+    title: 'حلول أمنية وتقنية تُنفذ باحترافية وتعمل بثقة.',
+    description: '',
+    icon: FiShield,
   },
   {
-    title: 'تحليل وذكاء اصطناعي',
-    description:
-      'كشف أنماط غير اعتيادية، تقليل الإنذارات الكاذبة، واقتراحات تلقائية لتحسين تغطية المراقبة.',
-    icon: FiCpu,
+    title: 'من الكاميرات إلى الأنظمة الذكية… كل ما تحتاجه منشأتك في مكان واحد.',
+    description: '',
+    icon: FiCamera,
   },
   {
-    title: 'أمان الوصول والصلاحيات',
-    description:
-      'صلاحيات متدرجة، تسجيل دخول آمن، وسجل تدقيق لكل عملية حساسة على النظام.',
+    title: 'أمان أعلى، إدارة أسهل، وتقنية تواكب احتياج أعمالك.',
+    description: '',
     icon: FiLock,
   },
   {
-    title: 'تنبيهات فورية متعددة القنوات',
-    description:
-      'إشعارات للجوال والبريد وواجهات الربط API لدمج التنبيهات مع أنظمة العمليات لديك.',
-    icon: FiRadio,
+    title: 'نُحول منشأتك إلى بيئة أكثر ذكاءً وأمانًا واستقرارًا.',
+    description: '',
+    icon: FiCpu,
   },
   {
-    title: 'تطبيقات ميدانية محسّنة',
-    description:
-      'واجهات مبنية لتعمل بسلاسة على الشبكات المتغيرة مع وضع عدم الاتصال المؤقت عند الحاجة.',
-    icon: FiSmartphone,
+    title: 'تنفيذ احترافي، دعم فني سريع، وجودة تعتمد عليها.',
+    description: '',
+    icon: FiZap,
   },
   {
-    title: 'صحة النظام والأداء',
-    description:
-      'مؤشرات تشغيل، سعة تخزين، وجودة البث — مع تنبيهات استباقية قبل تأثر تجربة المستخدم.',
-    icon: FiActivity,
+    title: 'لأن نجاح أعمالك يبدأ من بنية تقنية قوية وآمنة.',
+    description: '',
+    icon: FiTrendingUp,
   },
 ];

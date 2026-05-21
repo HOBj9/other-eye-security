@@ -1,17 +1,15 @@
 import { MainLayout } from '../layouts/MainLayout';
 import { HeroSection } from '../sections/home/HeroSection';
-import { PlatformCapabilitiesSection } from '../sections/home/PlatformCapabilitiesSection';
-import { WorkProcessSection } from '../sections/home/WorkProcessSection';
 import {
+  ClientsSection,
   ContactCtaSection,
   FaqPreviewSection,
-  FeaturesSection,
   FooterSection,
+  PlatformCapabilitiesSection,
   ProductsPreviewSection,
-  ServicesSection,
-  StatisticsSection,
-  TestimonialsSection,
+  ProjectsSection,
   SectorsShowcaseSection,
+  ServicesSection,
   WhyChooseUsSection,
 } from '../sections/home/HomeSectionPlaceholders';
 
@@ -22,13 +20,11 @@ export function HomePage() {
       <SectorsShowcaseSection />
       <ServicesSection />
       <PlatformCapabilitiesSection />
-      <FeaturesSection />
-      <WhyChooseUsSection />
-      <WorkProcessSection />
       <ProductsPreviewSection />
-      <StatisticsSection />
-      <TestimonialsSection />
+      <WhyChooseUsSection />
+      <ProjectsSection />
       <FaqPreviewSection />
+      <ClientsSection />
       <ContactCtaSection />
       <FooterSection />
     </MainLayout>
