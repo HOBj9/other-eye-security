@@ -12,6 +12,7 @@ import {
 import { FaWhatsapp } from 'react-icons/fa';
 import { FaqAccordion } from '../../components/faq/FaqAccordion';
 import { FeaturesServiceStack } from '../../components/features/FeaturesServiceStack';
+import { SocialLinks } from '../../components/contact/SocialLinks';
 import { CONTACT } from '../../data/contact';
 import { faqItems } from '../../data/faq';
 import { featureCards } from '../../data/featureCards';
@@ -451,19 +452,7 @@ export const ContactCtaSection = () => (
         className="glass-card flex flex-col items-center gap-3 p-6 text-center"
       >
         <span className="text-sm font-bold text-white">حسابات التواصل</span>
-        <motion.div className="flex flex-wrap justify-center gap-2">
-          {CONTACT.social.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-semibold text-white/85 transition hover:border-primary/35 hover:text-white"
-            >
-              {item.label}
-            </a>
-          ))}
-        </motion.div>
+        <SocialLinks className="flex flex-wrap justify-center gap-2" />
       </motion.div>
     </motion.div>
     <p className="mt-6 text-center text-sm text-white/55">{CONTACT.address}</p>
@@ -511,6 +500,7 @@ export const FooterSection = () => (
             <li>{CONTACT.address}</li>
             <li className="text-white/60">س.ت: {CONTACT.commercialRegister}</li>
           </ul>
+          <SocialLinks className="mt-4 flex flex-wrap gap-2" />
         </div>
       </div>
       <p className="mt-8 border-t border-white/10 pt-4 text-center text-xs text-white/60">

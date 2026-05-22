@@ -11,9 +11,9 @@ export const partners: Partner[] = [
     logoAlt: 'شعار وكالة الأنباء السعودية',
   },
   {
-    name: 'شركة سنام وإركاز',
+    name: 'شركة سنام',
     logoSrc: '/partner-sanam-erkaz.png',
-    logoAlt: 'شعار شركة سنام وإركاز',
+    logoAlt: 'شعار شركة سنام',
   },
   {
     name: 'إركاز',

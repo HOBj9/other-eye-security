@@ -1,6 +1,7 @@
 import { FaWhatsapp } from 'react-icons/fa';
 import { FiMail, FiMapPin, FiPhone } from 'react-icons/fi';
 import { MainLayout } from '../layouts/MainLayout';
+import { SocialLinks } from '../components/contact/SocialLinks';
 import { CONTACT } from '../data/contact';
 
 export function ContactPage() {
@@ -77,19 +78,10 @@ export function ContactPage() {
               </li>
               <li className="rounded-xl border border-border-soft bg-card/80 p-4 text-center">
                 <p className="text-muted text-xs font-medium uppercase tracking-wide">حسابات التواصل</p>
-                <div className="mt-3 flex flex-wrap justify-center gap-2">
-                  {CONTACT.social.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-lg border border-border-soft px-3 py-1.5 text-xs font-semibold hover:text-primary"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
+                <SocialLinks
+                  className="mt-3 flex flex-wrap justify-center gap-2"
+                  linkClassName="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border-soft bg-card/80 text-lg text-heading transition hover:border-primary/40 hover:text-primary"
+                />
               </li>
             </ul>
           </div>
